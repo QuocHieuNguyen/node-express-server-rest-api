@@ -3,11 +3,19 @@ import { Router } from 'express';
 
 const router = Router();
 
+// Utility function to log messages with timestamp
+const logWithTimestamp = (message) => {
+  console.log(`[${new Date().toISOString()}] ${message}`);
+};
+
 router.get('/', (req, res) => {
+  logWithTimestamp('GET / - Fetching all messages');
   return res.send(Object.values(req.context.models.messages));
 });
 
 router.get('/:messageId', (req, res) => {
+  const messageId = req.params.messageId;
+  logWithTimestamp(`GET /${messageId} - Fetching message with ID: ${messageId}`);
   return res.send(req.context.models.messages[req.params.messageId]);
 });
 
